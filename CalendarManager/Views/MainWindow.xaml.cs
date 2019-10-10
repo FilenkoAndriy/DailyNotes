@@ -25,7 +25,7 @@ namespace CalendarManager
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel();
+            //DataContext = new MainViewModel();
         }
     }
 }
