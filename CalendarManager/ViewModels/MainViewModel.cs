@@ -12,10 +12,12 @@ namespace CalendarManager.ViewModels
 {
     class MainViewModel : BaseViewModel
     {
-        string filepath = "notes.json";
+        private string filepath = "notes.json";
         private DateTime selectedDate = DateTime.Today;
         private Note selectedNote;
-        public ObservableCollection<Note> notes = new ObservableCollection<Note>();
+        private ObservableCollection<Note> notes;
+        private RelayCommand addCommand;
+        private RelayCommand removeCommand;
 
         public ObservableCollection<Note> Notes
         {
@@ -41,19 +43,11 @@ namespace CalendarManager.ViewModels
         public ObservableCollection<Note> GetNotes(DateTime date)
         {
             List<Note> items = readJson();
-            ObservableCollection<Note> notes = new ObservableCollection<Note>();
-            foreach (Note note in items)
-            {
-                if(note.Date == date)
-                {
-                    notes.Add(note);
-                }
-            }
+            ObservableCollection<Note> notes = new ObservableCollection<Note>(items.Where(i => i.Date == date));
+            
             return notes;
         }
-
-
-        private RelayCommand addCommand;
+        
         public RelayCommand AddCommand
         {
             get
@@ -61,14 +55,20 @@ namespace CalendarManager.ViewModels
                 return addCommand ??
                   (addCommand = new RelayCommand(obj =>
                   {
-                      Note note = new Note { Id = 5, Date = selectedDate, Title = "В универ", Description = "Сдать заявление, подойти к Пономарьову." };
+                      Note note = new Note
+                      {
+                          Id = 5,
+                          Date = selectedDate,
+                          Title = "В универ",
+                          Description = "Сдать заявление, подойти к Пономарьову."
+                      };
+
                       writeJson(note);
                       notes.Add(note);
                   }));
             }
         }
 
-        private RelayCommand removeCommand;
         public RelayCommand RemoveCommand
         {
             get
@@ -78,7 +78,7 @@ namespace CalendarManager.ViewModels
                     {
 
                     }
-                    )
+                    ));
             }
         }
 
@@ -90,6 +90,7 @@ namespace CalendarManager.ViewModels
                 string jsonRead = r.ReadToEnd();
                 items = JsonConvert.DeserializeObject<List<Note>>(jsonRead);
             }
+
             return items;
         }
 
