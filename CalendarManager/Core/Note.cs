@@ -9,49 +9,15 @@ using System.Threading.Tasks;
 namespace CalendarManager.Core
 {
     [Serializable]
-    class Note : INotifyPropertyChanged
+    class Note 
     {
-        DateTime date;
-        string title;
-        string description;
-
         public int Id { get; set; }
 
-        public DateTime Date
-        {
-            get { return date; }
-            set
-            {
-                date = value;
-                OnPropertyChanged("Date");
-            }
-        }
+        public DateTime Date { get; set; }
 
-        public string Title
-        {
-            get { return title; }
-            set
-            {
-                title = value;
-                OnPropertyChanged("Title");
-            }
-        }
+        public string Title { get; set; }
 
-        public string Description
-        {
-            get { return description; }
-            set
-            {
-                description = value;
-                OnPropertyChanged("Description");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
+        public string Description { get; set; }
+        
     }
 }
