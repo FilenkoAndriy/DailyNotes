@@ -131,6 +131,7 @@ namespace CalendarManager.ViewModels
 
             return items;
         }
+        
         public void WriteJson(List<Note> notesToFile)
         {
             //List<Note> notes = ReadJson();
