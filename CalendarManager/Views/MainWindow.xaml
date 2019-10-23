@@ -24,8 +24,12 @@
 
         </Calendar>
         <StackPanel Grid.Row="1" >
-            <!--><TextBox Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}"/><-->
-            <ListBox ItemsSource="{Binding Notes, UpdateSourceTrigger=PropertyChanged}">
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding AddCommand}">Добавть заметку</Button>
+                <Button Command="{Binding RemoveCommand}">Удалить заметку</Button>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding Notes, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding SelectedNote}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5">
@@ -36,10 +40,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding AddCommand}">Добавть заметку</Button>
-                <Button>Удалить заметку</Button>
-            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
