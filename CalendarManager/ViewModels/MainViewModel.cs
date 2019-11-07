@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CalendarManager.Views;
 
 namespace CalendarManager.ViewModels
 {
@@ -65,14 +66,11 @@ namespace CalendarManager.ViewModels
                 return addCommand ??
                   (addCommand = new RelayCommand(obj =>
                   {
-                      Note note = new Note
-                      {
-                          Id = ReadJson().Last<Note>().Id + 1,
-                          Date = selectedDate,
-                          Title = "В универ",
-                          Description = "Сдать заявление, подойти к Пономарьову."
-                      };
-                      AddNote(note);
+                      AddNoteWindow addNoteWindow = new AddNoteWindow();
+                      AddNoteViewModel addNoteViewModel = new AddNoteViewModel(selectedDate);
+                      addNoteWindow.DataContext = addNoteViewModel;
+                      addNoteWindow.ShowDialog();
+                      AddNote(addNoteViewModel.Note);
                   }));
             }
         }
@@ -133,8 +131,6 @@ namespace CalendarManager.ViewModels
         }
         public void WriteJson(List<Note> notesToFile)
         {
-            //List<Note> notes = ReadJson();
-            //notes.Add(note);
             string jsonWrite = JsonConvert.SerializeObject(notesToFile);
             File.WriteAllText(filepath, jsonWrite);
         }
