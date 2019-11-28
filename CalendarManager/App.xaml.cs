@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
 
 namespace CalendarManager
 {
@@ -18,10 +19,16 @@ namespace CalendarManager
         {
             MainWindow window = new MainWindow();
             MainViewModel mainViewModel = new MainViewModel();
+            string filepath = "notes.json";
+
+            if (!File.Exists(filepath))
+            {
+                File.WriteAllText(filepath, "[]");
+            }
 
             base.OnStartup(e);
+            mainViewModel.SelectedDate = DateTime.Today;
             window.DataContext = mainViewModel;
-
             window.Show();
         }
     }

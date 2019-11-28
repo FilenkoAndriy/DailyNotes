@@ -14,9 +14,9 @@ namespace CalendarManager.ViewModels
     class MainViewModel : BaseViewModel
     {
         private string filepath = "notes.json";
-        private DateTime selectedDate = DateTime.Today;
+        private DateTime selectedDate;
         private Note selectedNote;
-        private ObservableCollection<Note> notes;
+        private ObservableCollection<Note> notes = new ObservableCollection<Note>();
         private RelayCommand addCommand;
         private RelayCommand removeCommand;
 
